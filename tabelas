@@ -1,0 +1,33 @@
+CREATE DATABASE meu_banco_de_dados;
+
+\c meu_banco_de_dados;
+
+CREATE TABLE cliente (
+    id_cliente SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    data_nascimento DATE,
+    saldo DECIMAL(10,2),
+    ativo BOOLEAN DEFAULT true
+);
+
+INSERT INTO cliente (nome, email, data_nascimento, saldo) VALUES
+    ('Guilherme Barbosa', 'guilherme@gmail.com', '2003-05-08', 1500.50),
+    ('Maria Cecilia', 'maria@gmail.com', '1985-12-10', 2000.75);
+
+
+CREATE TABLE pedido (
+    id_pedido SERIAL PRIMARY KEY,
+    id_cliente INTEGER REFERENCES cliente(id_cliente),
+    descricao TEXT,
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    quantidade INTEGER,
+    valor_unitario NUMERIC(8,2)
+);
+
+INSERT INTO pedido (id_cliente, descricao, quantidade, valor_unitario) VALUES
+    (1, 'Produto A', 3, 50.99),
+    (2, 'Produto B', 2, 30.50);
+
+SELECT * FROM cliente;
+SELECT * FROM pedido;
